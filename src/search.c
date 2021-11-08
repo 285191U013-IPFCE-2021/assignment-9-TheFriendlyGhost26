@@ -1,7 +1,24 @@
 #include "search.h"
 #include <stdbool.h>
 
-bool search(int a[], int n, int x)
+//Function that searches an array for element x
+bool search (int a[], int n, int x) 
 {
-    return 0;
+
+    if (n == 0)
+    {
+        return false;
+    }
+
+    if (a [n-1] == x)
+    {
+        return true;
+    }
+    
+    // Recursion
+    else 
+        return search (a, n-1, x);  
 }
+
+
+
