@@ -2,97 +2,124 @@
  * Search an expression using DFS.
  */
 
-#include <stdio.h>		/* scanf, printf */
-#include <stdlib.h>		/* abort */
-#include <stdbool.h>		/* bool, true, false */
-#include "dfs.h"
+#include <stdio.h>   /* scanf, printf */
+#include <stdlib.h>  /* abort */
+#include <stdbool.h> /* bool, true, false */
+#include "../include/dfs.h"
+#include <assert.h>
 
+void DFT(node *root)
 
-void DFT (node * root)
 {
-	// Implement DFS
-	// Hint: You can use print_node, print_tree and/or print_stack.
+  assert(root != NULL);
+  stack *temp = (struct stack *)malloc(sizeof(struct stack *));
+  temp = push(temp, root);
+  while (temp != NULL)
+  {
+    node *toppp = temp->node;
+    temp = pop(temp);
+
+    if (toppp->rchild != NULL)
+      temp = push(temp, toppp->rchild);
+
+    if (toppp->lchild != NULL)
+      temp = push(temp, toppp->lchild);
+  }
 }
 
-node *make_node (int num, node * left, node * right)
+node *make_node(int num, node *left, node *right)
 {
-	return 0;
+  //Creating a node pointer
+  struct node *n;                                
+  n = (struct node *)malloc(sizeof(struct node));
+  n->num = num;                                   
+  //l- and rchild is made NULL
+  n->lchild = left;                               
+  n->rchild = right;                             
+  return n;                                      
 }
 
-void free_node (node * p)
+void free_node(node *p)
 {
-	
+  free_node(p->lchild);
+  free_node(p->rchild);
+  free(p);
 }
 
-
-void print_node (node * p)
+void print_node(node *p)
 {
-
   if (p == NULL)
-    printf ("NULL\n");
+    printf("NULL\n");
   else
-    printf ("%d", p->num);
+    printf("%d", p->num);
 }
 
-
-void print_tree (node * p, int depth)
+void print_tree(node *p, int depth)
 {
   for (int i = 0; i < depth; i = i + 1)
-    printf (" ");
-  printf ("| ");
+    printf(" ");
+  printf("| ");
 
   if (p == NULL)
-    printf ("NULL\n");
+    printf("NULL\n");
   else
-    printf ("[%d]\n", p->num);
-
+    printf("[%d]\n", p->num);
 
   if (p->lchild)
-    {
-      print_tree (p->lchild, depth + 1);
-    }
+  {
+    print_tree(p->lchild, depth + 1);
+  }
 
   if (p->rchild)
-    print_tree (p->rchild, depth + 1);
+    print_tree(p->rchild, depth + 1);
 }
 
-stack *push (stack * topp, node * node)
+stack *push(stack *topp, node *newnode)
 {
-	return 0;
+  struct stack *temp = (struct stack *)malloc(sizeof(struct stack *));
+  //A new stack is created
+  temp->node = newnode; 
+  temp->next = topp;
+  return temp;
 }
 
-bool isEmpty (stack * topp)
+bool isEmpty(stack *topp)
 {
   return false;
 }
 
-node *top (stack * topp)
+node *top(stack *topp)
 {
-	return 0;
+  return 0;
 }
 
-// Utility function to pop topp  
-// element from the stack 
+// Utility function to pop topp
+// element from the stack
 
-stack *pop (stack * topp)
+stack *pop(stack *topp)
 {
-	return 0;
+  stack *toppp;
+  printf("%d, ", topp->node->num);
+  //Top element popped
+  toppp = topp->next;
+  free(topp);
+  return toppp;
 }
 
-void print_stack (stack * topp)
+void print_stack(stack *topp)
 {
   struct stack *temp = topp;
 
   while (temp != NULL)
-    {
+  {
 
-      print_node (temp->node);
-      printf ("\n");
+    print_node(temp->node);
+    printf("\n");
 
-      temp = temp->next;
-    }
+    temp = temp->next;
+  }
 
-  printf ("====\n");
+  printf("====\n");
 
   return;
 }
